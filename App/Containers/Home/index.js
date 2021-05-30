@@ -10,10 +10,10 @@ export default class Posts extends React.Component {
     renderItems(item, index) {
         return (
             <TouchableOpacity style={styles.card}
-            onPress={() => {
-                this.props.navigation.navigate('UserDetails',
-                  { UserDetails: JSON.stringify(item) })
-              }}
+                onPress={() => {
+                    this.props.navigation.navigate('UserDetails',
+                        { UserDetails: JSON.stringify(item) })
+                }}
             >
                 <Text style={styles.titleText}>{item.name}</Text>
                 <Text style={styles.descriptionText}>{item.email}</Text>
@@ -24,7 +24,7 @@ export default class Posts extends React.Component {
     render() {
 
         return (
-            <View  style={{flex:1}}>
+            <View style={{ flex: 1 }}>
 
                 <LinearGradient
                     start={{ x: 0, y: 0 }}
@@ -32,7 +32,7 @@ export default class Posts extends React.Component {
                     colors={[COLORS.PrimaryDarkColor, COLORS.PrimaryColor]}
                     style={styles.headerStyle}
                 >
-                 
+
                     <Text style={styles.headertextStyle}>Home</Text>
 
                 </LinearGradient>
@@ -42,12 +42,12 @@ export default class Posts extends React.Component {
                     style={styles.flatListStyle}
                     data={HomeJsonData}
                     showsVerticalScrollIndicator={false}
-                    keyExtractor={(index) => index}
+                    keyExtractor={(item) => item.id}
                     renderItem={({ item, index }) =>
                         this.renderItems(item, index)
                     }
                 />
-        
+
             </View>
         )
     }
