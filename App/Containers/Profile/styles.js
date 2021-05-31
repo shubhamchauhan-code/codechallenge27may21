@@ -5,11 +5,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.WhiteColor,
-        justifyContent:'center'
     },
-    spinnerTextStyle:{
+    spinnerTextStyle: {
         fontSize: Dimension.normalize(16),
-        color:COLORS.BlackColor
+        color: COLORS.BlackColor
     },
     rowStyle: {
         flexDirection: 'row',
@@ -20,7 +19,6 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         right: 0,
-        position:'absolute',
         height: Dimension.getHeight(9),
         justifyContent: 'center'
     },
@@ -49,7 +47,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: Dimension.getWidth(2),
     },
-  
+
     midView: {
         flex: 1,
     },
@@ -58,50 +56,85 @@ const styles = StyleSheet.create({
         height: Dimension.getWidth(26),
         borderRadius: Dimension.getWidth(26),
         elevation: 20,
-        position:'absolute',
+        position: 'absolute',
         zIndex: 99,
-        alignSelf:'center',
+        alignSelf: 'center',
         top: Dimension.getHeight(-8)
     },
-    profileImg:{
+    profileImg: {
         width: Dimension.getWidth(26),
         height: Dimension.getWidth(26),
         borderRadius: Dimension.getWidth(26),
-        position:'absolute',
+        position: 'absolute',
         zIndex: 99,
     },
-    midCard:{
+    midCard: {
         backgroundColor: COLORS.WhiteColor,
         width: Dimension.getWidth(92),
         elevation: 13,
         alignSelf: 'center',
-        paddingVertical: Dimension.getHeight(7),
+        paddingVertical: Dimension.getHeight(5),
         borderRadius: Dimension.getWidth(4),
+        marginTop: Dimension.getHeight(2)
     },
-    textView:{
-        alignSelf:'center'
+    rowView:{
+        flexDirection:'row',
     },
-    titleTextStyle:{
+    input: {
+        width: Dimension.getWidth(60),
+        height: Dimension.getHeight(4),
+        alignSelf: 'center',
+        fontSize: Dimension.normalize(14),
+        borderBottomColor: COLORS.PrimaryColor,
+        borderBottomWidth: 1,
+        paddingLeft: 10,
+        marginLeft:5,
+        marginBottom:10,
+        padding:0,
+        color: COLORS.TextColor
+    },
+    textView: {
+        alignSelf: 'center'
+    },
+    titleTextStyle: {
         fontSize: Dimension.normalize(14),
         color: COLORS.PrimaryColor,
         fontWeight: 'bold',
         marginBottom: Dimension.getHeight(2.5),
     },
-    infoTextStyle:{
+    infoTextStyle: {
         fontWeight: 'bold',
         color: COLORS.BlackColor,
         fontSize: Dimension.normalize(13),
     },
-    changePassStyle:{
+    changePassStyle: {
         fontSize: Dimension.normalize(13),
         textDecorationLine: 'underline',
         color: COLORS.PrimaryColor,
-        alignSelf:'flex-end',
-        fontWeight:'bold',
+        alignSelf: 'flex-end',
+        fontWeight: 'bold',
         marginRight: Dimension.getWidth(3),
         marginTop: Dimension.getHeight(3)
+    },
+    updateBtnStyle:{
+        fontSize: Dimension.normalize(13),
+        fontWeight:'bold',
+        alignSelf:'center',
+        textDecorationLine:'underline',
+        color: COLORS.PrimaryColor,
+        marginTop: Dimension.getHeight(2)
+    },
+    logoutBtnStyle: {
+        elevation: 13,
+        margin: 20,
+        backgroundColor: COLORS.WhiteColor
+    },
+    logoutText: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+        padding: 15,
     }
-   
+
 })
 
 export default styles

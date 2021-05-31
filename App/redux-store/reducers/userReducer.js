@@ -31,7 +31,6 @@ export default userReducer = (state = initialState, action) => {
         ...state,
         ...action.payload
       };
-
     case LOGOUT:
       return {
         ...initialState,

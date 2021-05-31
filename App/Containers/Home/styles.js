@@ -3,6 +3,7 @@ import { COLORS } from '../../Utils/Colors';
 import Dimension from '../../Utils/Dimension';
 
 const styles = StyleSheet.create({
+    container: { flex: 1 },
     headerStyle: {
         top: 0,
         left: 0,

@@ -1,48 +1,74 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { COLORS } from '../../../Utils/Colors';
 import styles from './styles';
+import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default class Login extends React.Component {
-    constructor(props) {
-        super(props);
+const Signup = (props) => {
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [mobile, setMobile] = useState("");
+    const [address, setAddress] = useState("");
+    const [hobbies, setHobbies] = useState("");
+    const [password, setPassword] = useState("");
 
-    }
-
-    validUser() {
-
-        console.log('dgfvhg')
-        if (this.state.mobile === '') {
-            this.setState({ mobileErr: true, mobileErrMsg: "Please enter mobile" })
-        } else if (this.state.password === '') {
-            this.setState({ passErr: true, passErrMsg: "Please enter password" })
+    const validUser = () => {
+        let emailRegx = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+        if (fullName === '' || email === '' || mobile === '' || address === '' || hobbies === '' || password === '') {
+            Toast.show('Please fill all the fields');
+        } else if (!emailRegx.test(email)) {
+            Toast.show('Please enter valid email');
+        } else if (password.length < 6) {
+            Toast.show('Password must have atleast 6 characters');
         } else {
-            this.saveValueFunction();
+            saveSignUpData(fullName, email, mobile, address, hobbies, password)
         }
     }
 
-    render() {
-        return (
-            <LinearGradient
-                colors={[COLORS.PrimaryDarkColor, COLORS.PrimaryColor]}
-                style={styles.container}>
+    const saveSignUpData = async (name, email, mobile, address, hobbies, password) => {
+        try {
+            await AsyncStorage.setItem('FULLNAME', name);
+            await AsyncStorage.setItem('EMAIL', email);
+            await AsyncStorage.setItem('MOBILE', mobile);
+            await AsyncStorage.setItem('ADDRESS', address);
+            await AsyncStorage.setItem('HOBBIES', hobbies);
+            await AsyncStorage.setItem('PASSWORD', password);
 
-                <View style={styles.container3}>
-                    <LinearGradient
-                        colors={[COLORS.PrimaryDarkColor, COLORS.PrimaryColor]}
-                        style={styles.linear}>
+            props.navigation.reset({
+                index: 0,
+                routes: [{ name: 'TabNavigation' }]
+            });
+        } catch (e) {
+            console.log("Async Err in Signup==", e)
+        }
+    };
 
+  
+
+
+    return (
+        <LinearGradient
+            colors={[COLORS.PrimaryDarkColor, COLORS.PrimaryColor]}
+            style={styles.container}>
+
+
+            <View style={styles.container3}>
+
+                <LinearGradient
+                    colors={[COLORS.PrimaryDarkColor, COLORS.PrimaryColor]}
+                    style={styles.linear}>
+                    <ScrollView>
                         <Text style={styles.textLogin}>Signup</Text>
+
+
 
                         <TextInput placeholder={"Name"}
                             style={styles.input}
                             placeholderTextColor={COLORS.TextColor}
                             onChangeText={(text) => {
-                                this.setState({
-                                    password: text,
-                                    passErr: false
-                                })
+                                setFullName(text)
                             }}
                         />
 
@@ -51,51 +77,64 @@ export default class Login extends React.Component {
                             style={styles.input}
                             placeholderTextColor={COLORS.TextColor}
                             onChangeText={(text) => {
-                                this.setState({
-                                    password: text,
-                                    passErr: false
-                                })
+                                setEmail(text)
                             }}
                         />
 
                         <TextInput placeholder={"Mobile Number"}
-                         keyboardType='phone-pad'
+                            keyboardType='phone-pad'
                             style={styles.input}
                             placeholderTextColor={COLORS.TextColor}
                             onChangeText={(text) => {
-                                this.setState({
-                                    password: text,
-                                    passErr: false
-                                })
+                                setMobile(text)
                             }}
                         />
 
-                        <TextInput placeholder={"Password"} secureTextEntry={true}
+                        <TextInput placeholder={"Address"}
+                            keyboardType='default'
                             style={styles.input}
                             placeholderTextColor={COLORS.TextColor}
                             onChangeText={(text) => {
-                                this.setState({
-                                    password: text,
-                                    passErr: false
-                                })
+                                setAddress(text)
+                            }}
+                        />
+
+                        <TextInput placeholder={"Hobbies"}
+                            keyboardType='default'
+                            style={styles.input}
+                            placeholderTextColor={COLORS.TextColor}
+                            onChangeText={(text) => {
+                                setHobbies(text)
+                            }}
+                        />
+
+                        <TextInput placeholder={"Password"}
+                            secureTextEntry={true}
+                            style={styles.input}
+                            placeholderTextColor={COLORS.TextColor}
+                            onChangeText={(text) => {
+                                setPassword(text)
                             }}
                         />
 
                         <View style={styles.row}>
-                            <TouchableOpacity style={styles.btn} onPress={() => { this.props.navigation.navigate('Home') }} >
-
+                            <TouchableOpacity style={styles.btn} onPress={() => { validUser() }} >
                                 <Text style={styles.btnTxt}>Signup</Text>
-
                             </TouchableOpacity>
-                            <Text style={styles.signupText} onPress={() => { this.props.navigation.navigate('Login') }} >Login</Text>
+                            <Text style={styles.signupText} onPress={() => { props.navigation.navigate('Login') }} >Login</Text>
                         </View>
 
 
-                    </LinearGradient>
+                    </ScrollView>
 
-                </View>
-            </LinearGradient>
+                </LinearGradient>
 
-        )
-    }
+            </View>
+
+        </LinearGradient>
+
+    )
+
 }
+
+export default Signup

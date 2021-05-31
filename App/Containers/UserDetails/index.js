@@ -21,13 +21,7 @@ export default class UserDetails extends React.Component {
         return (
 
             <View style={styles.container} >
-                {/* <Spinner
-                    visible={loader}
-                    size='large'
-                    color={COLORS.PrimaryDarkColor}
-                    textContent={'Please Wait...'}
-                    textStyle={styles.spinnerTextStyle}
-                /> */}
+
                 <LinearGradient
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}
@@ -53,8 +47,8 @@ export default class UserDetails extends React.Component {
                         <Text style={styles.titleTextStyle}>Address : <Text style={styles.infoTextStyle}>
                             {userJsonData.address.street}, {userJsonData.address.suite}
                             , {userJsonData.address.city}
-                            </Text></Text>
-                            <Text style={styles.titleTextStyle}>zipcode : <Text style={styles.infoTextStyle}>{userJsonData.address.zipcode}</Text></Text>
+                        </Text></Text>
+                        <Text style={styles.titleTextStyle}>zipcode : <Text style={styles.infoTextStyle}>{userJsonData.address.zipcode}</Text></Text>
                         <Text style={styles.titleTextStyle}>Contact : <Text style={styles.infoTextStyle}>{userJsonData.phone}</Text></Text>
                         <Text style={styles.titleTextStyle}>website : <Text style={styles.infoTextStyle}>{userJsonData.website}</Text></Text>
                         <Text style={styles.companyTextStyle}>Company Details :</Text>

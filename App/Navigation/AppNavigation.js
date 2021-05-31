@@ -17,10 +17,14 @@ import Profile from '../Containers/Profile';
 import Search from '../Containers/Search';
 import { connect } from 'react-redux';
 import Loading from '../Containers/Loading';
+import PostDetail from '../Containers/PostDetail';
+import ChangePassword from '../Containers/ChangePassword';
 
 const AuthNavigator = createStackNavigator();
 const MainStack = createStackNavigator();
+const PostStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const ProfileStack = createStackNavigator();
 
 
 const tabNavigation = () => {
@@ -35,13 +39,12 @@ const tabNavigation = () => {
               ? ICONS.HomeA
               : ICONS.HomeIn;
           } else if (route.name === 'Posts') {
-            iconName = focused ? ICONS.SearchA : ICONS.SearchIn;
+            iconName = focused ? ICONS.PostA : ICONS.PostIn;
           } else if (route.name === 'Search') {
             iconName = focused ? ICONS.SearchA : ICONS.SearchIn;
           } else if (route.name === 'Profile') {
             iconName = focused ? ICONS.ProfileA : ICONS.ProfileIn;
           }
-
           return <Image source={iconName} style={{ height: 18, width: 18 }} />;
         },
       })}
@@ -53,11 +56,27 @@ const tabNavigation = () => {
       }}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Posts" component={Posts} />
+      <Tab.Screen name="Posts" component={postStack} />
       <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="profileStack" component={profileStack} />
     </Tab.Navigator>
   )
+}
+
+const postStack = () => {
+  return (
+    <PostStack.Navigator>
+      <PostStack.Screen name="Posts" component={Posts} options={{ headerShown: false }} />
+      <PostStack.Screen name="PostDetail" component={PostDetail} options={{ headerShown: false }} />
+    </PostStack.Navigator>)
+}
+
+const profileStack = () => {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+      <ProfileStack.Screen name="ChangePassword" component={ChangePassword} options={{ headerShown: false }} />
+    </ProfileStack.Navigator>)
 }
 
 const AppNavigation = (props) => {
@@ -76,12 +95,14 @@ const AppNavigation = (props) => {
               userData.login ?
                 <MainStack.Navigator>
                   <MainStack.Screen name="TabNavigation" component={tabNavigation} options={{ headerShown: false }} />
-                  {/* <MainStack.Screen name="UserDetails" component={UserDetails} options={{ headerShown: false }} /> */}
+                  <MainStack.Screen name="UserDetails" component={UserDetails} options={{ headerShown: false }} />
+
                 </MainStack.Navigator>
                 :
                 <AuthNavigator.Navigator initialRouteName="Login">
                   <AuthNavigator.Screen name="Login" component={Login} options={{ headerShown: false }} />
                   <AuthNavigator.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
+                  <MainStack.Screen name="TabNavigation" component={tabNavigation} options={{ headerShown: false }} />
                 </AuthNavigator.Navigator>
             }
 

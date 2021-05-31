@@ -1,5 +1,4 @@
 export const IMAGES = {
-    foodImg: require('../Assets/Images/food.jpg'),
 }
 
 export const ICONS = {
@@ -15,5 +14,7 @@ export const ICONS = {
     SearchA: require('../Assets/Icons/search1.png'),
     SearchIn: require('../Assets/Icons/search2.png'),
     ProfileA: require('../Assets/Icons/user.png'),
-    ProfileIn: require('../Assets/Icons/user1.png')
+    ProfileIn: require('../Assets/Icons/user1.png'),
+    PostA: require('../Assets/Icons/post.png'),
+    PostIn: require('../Assets/Icons/postIn.png')
 }

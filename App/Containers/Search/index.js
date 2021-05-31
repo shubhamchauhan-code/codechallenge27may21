@@ -1,27 +1,57 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, Image, Alert, TextInput } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, TouchableOpacity, Image, Alert, TextInput, FlatList } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import { JSON_API } from '../../JsonAPI'
 import { COLORS } from '../../Utils/Colors'
 import { ICONS } from '../../Utils/Images'
 import styles from './styles'
+import Spinner from 'react-native-loading-spinner-overlay';
 
-export default class Search extends React.Component {
-    constructor() {
-        super()
+const Search = () => {
+    const [loader, setLoader] = useState(false);
+    const [searchData, setSearchData] = useState([])
 
+    useEffect(() => {
+       searchDataList()
+
+    },[])
+    const searchDataList = () => {
+        setLoader(true)
+        fetch(JSON_API.SearchList, {
+            method: 'GET',
+        })
+            .then(response => {
+                response.json().then(responseJson => {
+                    setSearchData(responseJson)
+                    setLoader(false)
+                })
+            })
+            .catch(error => {
+                setLoader(false)
+                console.log(error)
+            });
     }
 
-    render() {
+    const renderItems = (item, index) => {
+        return (
+            <View style={styles.card}>
+                <Image source={{uri: item.url}} resizeMode='contain' style={styles.imgStyle} />
+                <Text style={styles.titleText}>{item.title}</Text>
+            </View>
+        )
+    }
+
+
         return (
 
             <View style={styles.container} >
-                {/* <Spinner
+                <Spinner
                     visible={loader}
                     size='large'
                     color={COLORS.PrimaryDarkColor}
                     textContent={'Please Wait...'}
                     textStyle={styles.spinnerTextStyle}
-                /> */}
+                />
                 <LinearGradient
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}
@@ -42,22 +72,22 @@ export default class Search extends React.Component {
                     />
                     <Image source={ICONS.SearchA} resizeMode='contain' style={styles.searchIcon} />
                 </View>
-                <View style={styles.midCard}>
 
-                    <View style={styles.textView}>
-                        <Text style={styles.titleTextStyle}>Email : <Text style={styles.infoTextStyle}>email@gmail.com</Text></Text>
-                        <Text style={styles.titleTextStyle}>Password : <Text style={styles.infoTextStyle}>123456</Text></Text>
-                        <Text style={styles.titleTextStyle}>Address : <Text style={styles.infoTextStyle}>Indore</Text></Text>
-                        <Text style={styles.titleTextStyle}>Contact : <Text style={styles.infoTextStyle}>9876543210</Text></Text>
-                        <Text style={styles.titleTextStyle}>Hobbies : <Text style={styles.infoTextStyle}>Singing</Text></Text>
-                    </View>
-
-                    <Text style={styles.changePassStyle}>Change Password</Text>
-                </View>
-
+                <FlatList
+                    style={styles.flatListStyle}
+                    data={searchData}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item, index }) =>
+                        renderItems(item, index)
+                    }
+                />
+              
             </View>
 
         )
-    }
+    
 
 }
+
+export default Search 
